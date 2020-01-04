@@ -57,8 +57,10 @@ export default {
       iconList:[
         'el-icon-location-outline',
         'el-icon-coordinate',
+        'el-icon-s-order',
         'el-icon-user',
         'el-icon-office-building',
+        'el-icon-phone',
         'el-icon-folder',
         'el-icon-video-camera',
         'el-icon-wallet',
@@ -77,7 +79,8 @@ export default {
   },
   methods:{
     logout(){
-
+      window.sessionStorage.clear()
+      this.$router.push('/login')
     },
     toggleCollapse(){
       this.isCollapse = !this.isCollapse

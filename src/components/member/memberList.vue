@@ -7,12 +7,11 @@
     </el-breadcrumb>
     <el-card>
       <el-row>
-    
         <el-col :span="4">
           <span style="width:125px">会员昵称：</span>
           <el-input clearable @change="getMemberList" v-model="queryInfo.nickname"></el-input>
         </el-col>
-
+        
         <el-col :span="4">
           <span style="width:125px">手机号码：</span>
           <el-input clearable @change="getMemberList" v-model="queryInfo.phone"></el-input>

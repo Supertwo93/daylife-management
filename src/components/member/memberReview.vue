@@ -154,8 +154,8 @@
           label="操作"
           width="350">
           <template slot-scope="scoped">
-            <el-button @click="showPassDialog(scoped.row)" v-show="scoped.row.processStatus==0" type="success" size="mini">通过</el-button>
-            <el-button v-show="scoped.row.processStatus==0" type="danger" size="mini">不通过</el-button>
+            <el-button @click="showPassDialog(scoped.row,1)" v-show="scoped.row.processStatus==0" type="success" size="mini">通过</el-button>
+            <el-button @click="showPassDialog(scoped.row,0)" v-show="scoped.row.processStatus==0" type="danger" size="mini">不通过</el-button>
             <el-button @click="showInfoDialog(scoped.row)" type="primary" size="mini">查看</el-button>
           </template>
         </el-table-column>
@@ -283,16 +283,16 @@ export default {
       this.list = res.data.page.records
     },
     async passAuth(){
-      this.passParams.status = 1
       const {data:res} = await this.$http.post('/back/tbAppuserMember/updateCerStatus',this.passParams,{params:{token:window.sessionStorage.getItem('token')}})
       if(res.resultCode!=1) return this.$message.error('操作失败')
       this.$message.success('操作成功')
       this.passDialogVisible = false
       this.getList()
     },
-    showPassDialog(value){
+    showPassDialog(value,inter){
       this.passParams.appuserId = value.appuserId
       this.passParams.type = value.type
+      this.passParams.status = inter
       this.passDialogVisible = true
     },
     searchItem(){

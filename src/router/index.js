@@ -31,6 +31,12 @@ const PointSetting = ()=> import(/*webpackChunkName:"login_home_welcome" */ '../
 const PointRuleSetting = ()=> import(/*webpackChunkName:"login_home_welcome" */ '../components/point/pointRuleSetting.vue')
 const GroundPushList = ()=> import(/*webpackChunkName:"login_home_welcome" */ '../components/member/groundPushList.vue')
 const SecondTypeManage = ()=> import(/*webpackChunkName:"login_home_welcome" */ '../components/publish/secondTypeManage.vue')
+const GoodsOrderList = ()=> import(/*webpackChunkName:"login_home_welcome" */ '../components/order/goodsOrderList.vue')
+const HouseSigningList = ()=> import(/*webpackChunkName:"login_home_welcome" */ '../components/order/houseSigningList.vue')
+const FinanceSigningList = ()=> import(/*webpackChunkName:"login_home_welcome" */ '../components/order/financeSigningList.vue')
+const EditPhone = ()=> import(/*webpackChunkName:"login_home_welcome" */ '../components/service/editPhone.vue')
+const FeedbackList = ()=> import(/*webpackChunkName:"login_home_welcome" */ '../components/service/feedbackList.vue')
+const UsercashflowList = ()=> import(/*webpackChunkName:"login_home_welcome" */ '../components/finance/usercashflowList')
 
 
 
@@ -70,6 +76,12 @@ const routes = [
       {path:"/pointRuleSetting",component:PointRuleSetting},
       {path:"/groundPushList",component:GroundPushList},
       {path:"/secondTypeManage",component:SecondTypeManage},
+      {path:"/goodsOrderList",component:GoodsOrderList},
+      {path:"/houseSigningList",component:HouseSigningList},
+      {path:"/financeSigningList",component:FinanceSigningList},
+      {path:"/editPhone",component:EditPhone},
+      {path:"/feedbackList",component:FeedbackList},
+      {path:"/usercashflowList",component:UsercashflowList},
       {
         path:"/menu",
         component:Menu,

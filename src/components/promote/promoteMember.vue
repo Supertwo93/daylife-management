@@ -8,6 +8,16 @@
         :label="item.nickName">
       </el-option>
     </el-select>
+    <el-date-picker
+      value-format="yyyy-MM-dd"
+      @change="dateChange"
+      v-model="date"
+      type="daterange"
+      range-separator="至"
+      start-placeholder="开始日期"
+      :picker-options="datePickerOptions"
+      end-placeholder="结束日期">
+    </el-date-picker>
     <div id="map">
       
     </div>
@@ -22,7 +32,15 @@ export default {
   data () {
     return {
       options:'',
-      userId:''
+      startTime:'',
+      endTime:'',
+      userId:'',
+      date:'',
+      datePickerOptions:{
+        disabledDate(time){
+          return time.getTime() > Date.now()
+        }
+      },
     }
   },
   methods: {
@@ -30,16 +48,24 @@ export default {
       const {data:res} = await this.$http.post('/back/tbGroundPushTrajectory/findGgroundPushNameList')
       if(res.resultCode!==1){return this.$message.error('获取地推人员失败')}
       this.options = res.data
-      console.log(this.options)
     },
     async createMap () {
 
-      const {data:res} = await this.$http.post('/back/tbGroundPushTrajectory/findGgroundPushList',{},{params:{userId:this.userId}})
+      const {data:res} = await this.$http.post('/back/tbGroundPushTrajectory/findGgroundPushList',{},{params:{userId:this.userId,startTime:this.startTime,endTime:this.endTime}})
+      if(this.userId===''){
+        this.userId = res.data[0].userId
+      }
       if(res.resultCode!==1){return this.$message.error(res.message)}
+      
       if(res.data.length===0){
         var map = new BMap.Map("map");
 	      var point = new BMap.Point(114.258154,22.728015);
         map.centerAndZoom(point, 18);
+        return this.$message({
+          duration:1500,
+          message:'暂无数据',
+          type:'error'
+        })
       }
       let startLon = parseInt(res.data[0].longitude)
       let endLat = parseInt(res.data[0].latitude) 
@@ -77,7 +103,17 @@ export default {
       }
     },
     memberChange(){
-      console.log(this.member)
+      // console.log(this.member)
+      this.createMap()
+    },
+    dateChange(value){
+      if(this.date==null){
+        this.startTime = ''
+        this.endTime = ''
+      }else{
+        this.startTime = this.date[0]
+        this.endTime = this.date[1]
+      }
       this.createMap()
     }
   },

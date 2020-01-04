@@ -12,8 +12,19 @@
         <el-col :span="5">
           <el-input v-model="queryInfo.title" clearable @change="inputChange" suffix-icon="el-icon-search" placeholder="请输入商品名称"></el-input>
         </el-col>
-        <el-col>
+        <el-col :span="2">
           <el-button @click="addDialogVisible=true" type="success">新增</el-button>
+        </el-col>
+        <el-col>
+          <span style="width:60px;margin-right:10px;">一级分类:</span>
+          <el-select @change="cateChange" clearable v-model="queryInfo.firstTypeId" placeholder="请选择">
+            <el-option
+              v-for="(item,index) in cateOptions"
+              :key="index"
+              :label="item.name"
+              :value="item.id">
+            </el-option>
+          </el-select>
         </el-col>
       </el-row>
 
@@ -119,7 +130,8 @@ export default {
       queryInfo:{
         pageNo:1,
         pageSize:10,
-        title:''
+        title:'',
+        firstTypeId:''
       },
       firstTypeList:[],
       total:1,
@@ -133,7 +145,16 @@ export default {
         firstType:'',
         title:'',
         secondtypeinfoId:''
-      }
+      },
+      cateOptions:[
+        {name:'生活',id:8},
+        {name:'代购',id:10},
+        {name:'家政',id:3},
+        {name:'金融',id:5},
+        {name:'房屋',id:1},
+        {name:'维修',id:9},
+        {name:'其它',id:4},
+      ],
     }
   },
   created(){
@@ -219,6 +240,10 @@ export default {
       }
 
       this.$message.success('删除成功成功')
+      this.getList()
+    },
+    cateChange(){
+      this.queryInfo.pageNo = 1
       this.getList()
     }
   }
